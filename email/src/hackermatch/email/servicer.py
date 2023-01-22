@@ -27,9 +27,14 @@ class EmailServicer(email_pb2_grpc.EmailServiceServicer):
             message['Subject'] = f"HackerMatch Matches for Hash {request.hash}"
             message.set_content(body)
             with smtplib.SMTP_SSL(smtp_server, smtp_port, context=context) as server:
-                server.login(sender_email, sender_password)
-                server.sendmail(sender_email, to_addr, message.as_string())
+                try:
+                    server.login(sender_email, sender_password)
+                    server.sendmail(sender_email, to_addr, message.as_string())
+                except smtplib.SMTPAuthenticationError:
+                    return email_pb2.SendMatchAlertResponse(
+                        success=False,
+                        message="Failed to login"
+                    )
         return email_pb2.SendMatchAlertResponse(
-            success=False,
-            message="Not implemented",
+            success=True,
         )
