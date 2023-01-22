@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+service SubmissionService {
+    rpc AddSubmission (AddSubmissionRequest) returns (AddSubmissionResponse) {}
+    rpc GetMatches (GetMatchesRequest) returns (GetMatchesResponse) {}
+}
+
+message AddSubmissionRequest {
+    string hash = 1;
+    string email = 2;
+}
+
+message AddSubmissionResponse {
+    bool success = 1;
+    string message = 2;
+}
+
+message GetMatchesRequest {
+    string hash = 1;
+}
+
+message GetMatchesResponse {
+    bool success = 1;
+    string message = 2;
+    repeated string emails = 3;
+}

@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+service EmailService {
+    rpc SendMatchAlert (SendMatchAlertRequest) returns (SendMatchAlertResponse) {}
+}
+
+message SendMatchAlertRequest {
+    string hash = 1;
+    repeated string emails = 2;
+}
+
+message SendMatchAlertResponse {
+    bool success = 1;
+    string message = 2;
+}
