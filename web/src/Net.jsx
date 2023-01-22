@@ -5,9 +5,6 @@ const submitHash = async (hash, email) => {
     hash: hash,
     email: email,
   });
-  if (res.status === 403) {
-    // TODO redirect to logout and then to the login screen
-  }
   console.log(res)
   if (!res.data.success)
     // eslint-disable-next-line no-throw-literal
