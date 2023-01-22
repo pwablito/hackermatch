@@ -36,16 +36,16 @@ def submit():
                 "success": False,
                 "message": "Failed to query matches",
             }), 500)
-        if len(match_response.emails) > 1:
+        if len(set(match_response.emails)) > 1:
             email_response = email_stub.SendMatchAlert(email_pb2.SendMatchAlertRequest(
                 hash=request.json["hash"],
-                emails=match_response.emails,
+                emails=list(set(match_response.emails)),
             ))
             if not email_response.success:
                 return Response(json.dumps({
                     "success": False,
                     "message": "Failed to send match emails",
-                }))
+                }), 500)
     return Response(json.dumps({
         "success": True,
     }), status=200)
